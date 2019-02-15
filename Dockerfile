@@ -41,7 +41,7 @@ CMD ["go", "run", "./server/server.go"]
 # -- 2nd Step :- Build react client
 # You should always specify a full version here to ensure all of your developers
 # are running the same version of Node.
-FROM node:alpine as publishbuilder
+FROM node:11.9-alpine as publishbuilder
 COPY ./client/package*.json ./client/
 RUN cd ./client && npm install --silent
 COPY ./client/ ./client/
@@ -50,5 +50,5 @@ RUN cd ./client && npm run build
 FROM nginx
 COPY --from=publishbuilder ./client/build /usr/share/nginx/
 COPY ./client/nginx.conf /etc/nginx/nginx.conf
-EXPOSE 80
+EXPOSE 3000
 #ENTRYPOINT ["nginx","-g","daemon off;"]
