@@ -36,7 +36,7 @@ RUN go build ./server/*.go
 
 # Start the server to listen for requests
 CMD ["go", "run", "./server/server.go"]
-EXPOSE 8081
+#EXPOSE 8081
 
 # -- 2nd Step :- Build react client
 # You should always specify a full version here to ensure all of your developers
