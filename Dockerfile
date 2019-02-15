@@ -51,4 +51,4 @@ FROM nginx
 COPY --from=publishbuilder ./client/build /usr/share/nginx/
 COPY ./client/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
-ENTRYPOINT ["nginx","-g","daemon off;"]
+#ENTRYPOINT ["nginx","-g","daemon off;"]
