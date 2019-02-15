@@ -52,7 +52,7 @@ CMD serve -s build
 EXPOSE 3000
 
 # Install all dependencies of the current project.
-COPY ./client/package*.json ./client/package*.json
+COPY ./client/package*.json ./client/
 #COPY npm-shrinkwrap.json npm-shrinkwrap.json
 RUN cd ./client && npm install 
 
