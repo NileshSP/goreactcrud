@@ -49,6 +49,6 @@ RUN cd ./client && npm run build
 
 FROM nginx
 COPY --from=publishbuilder ./client/build /usr/share/nginx/
-EXPOSE 3000
 COPY ./client/nginx.conf /etc/nginx/nginx.conf
+EXPOSE 4040
 #ENTRYPOINT ["nginx","-g","daemon off;"]
