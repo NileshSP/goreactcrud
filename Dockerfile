@@ -58,3 +58,7 @@ RUN cd ./client && npm install
 
 # Build for production.
 RUN cd ./client && npm run build --production
+
+RUN cd ./client
+
+CMD ["npm", "start"]
