@@ -5,11 +5,14 @@ import ListUsers from './ListUsers';
 class UserMain extends Component {
   constructor(props) {
     super(props)
+    let inDev = process.env.NODE_ENV !== 'production';
+    let port = inDev ? 8080 : process.env.PORT;
     this.state = {
         users : new Set(),
-        apiUrlBase : "http://localhost:8081",
+        apiUrlBase : "http://localhost:"+ port,
         getUrl : (endpointKey) => this.state.apiUrlBase + "/" + endpointKey
     }
+    console.log('React got port as', this.state.apiUrlBase)
     this.addUser = this.addUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
   }
