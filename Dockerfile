@@ -43,10 +43,12 @@ EXPOSE 8081
 # are running the same version of Node.
 FROM node:alpine as publishbuilder
 COPY ./client/package*.json ./client/
-RUN cd ./client && npm install 
+RUN cd ./client && npm install --silent
 COPY ./client/ ./client/
 RUN cd ./client && npm run build
 
 FROM nginx
+COPY --from=publishbuilder ./client/build /usr/share/nginx/
+COPY ./client/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
-COPY --from=publishbuilder ./client/build /usr/share/nginx/html
+ENTRYPOINT ["nginx","-g","daemon off;"]
