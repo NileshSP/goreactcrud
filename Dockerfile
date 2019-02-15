@@ -41,24 +41,12 @@ EXPOSE 8081
 # -- 2nd Step :- Build react client
 # You should always specify a full version here to ensure all of your developers
 # are running the same version of Node.
-FROM node:11.8.0
-
-# Override the base log level (info).
-ENV NPM_CONFIG_LOGLEVEL warn
-
-# Install all dependencies of the current project.
-COPY ./client/ ./client/
-#COPY npm-shrinkwrap.json npm-shrinkwrap.json
+FROM node:alpine as publishbuilder
+COPY ./client/package*.json ./client/
 RUN cd ./client && npm install 
+COPY ./client/ ./client/
+RUN cd ./client && npm run build
 
-# Build for production.
-RUN cd ./client && npm run build --production
-
-#RUN cd ./client
-
-#CMD ["npm", "start"]
-
-# Install and configure `serve`.
-RUN npm install -g serve
-CMD serve -s build
-EXPOSE 3000
+FROM nginx
+EXPOSE 80
+COPY --from=publishbuilder ./client/build /usr/share/nginx/html
