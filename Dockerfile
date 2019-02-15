@@ -27,6 +27,10 @@ COPY ./server/ ./server/
 
 COPY ./database/ ./database/
 
+RUN cd ./server && go get -d -v github.com/gorilla/mux github.com/jinzhu/gorm github.com/jinzhu/gorm/dialects/sqlite github.com/gorilla/handlers
+
+RUN cd ./server && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+
 # Build the go project in linux server environment
 RUN go build ./server/*.go
 
