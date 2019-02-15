@@ -46,11 +46,6 @@ FROM node:11.8.0
 # Override the base log level (info).
 ENV NPM_CONFIG_LOGLEVEL warn
 
-# Install and configure `serve`.
-RUN npm install -g serve
-CMD serve -s build
-EXPOSE 3000
-
 # Install all dependencies of the current project.
 COPY ./client/ ./client/
 #COPY npm-shrinkwrap.json npm-shrinkwrap.json
@@ -59,6 +54,11 @@ RUN cd ./client && npm install
 # Build for production.
 RUN cd ./client && npm run build --production
 
-RUN cd ./client
+#RUN cd ./client
 
-CMD ["npm", "start"]
+#CMD ["npm", "start"]
+
+# Install and configure `serve`.
+RUN npm install -g serve
+CMD serve -s build
+EXPOSE 3000
