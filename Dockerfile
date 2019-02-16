@@ -47,7 +47,7 @@ RUN cd ./client && npm install --silent
 COPY ./client/ ./client/
 RUN cd ./client && npm run build
 CMD ["cd","./client","&&","npm", "start"]
-EXPOSE 8081
+#EXPOSE 8081
 
 # FROM nginx
 # COPY --from=publishbuilder ./client/build /usr/share/nginx/
