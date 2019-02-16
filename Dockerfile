@@ -35,17 +35,17 @@ CMD ["go", "run","./server/","."]
 #EXPOSE 8081
 
 # -- 2nd Step :- Build react client
-FROM node:11.9-alpine as publishbuilder
-COPY ./client/package*.json ./client/
-RUN cd ./client && npm install --silent
-COPY ./client/ ./client/
-RUN cd ./client && npm run build
+# FROM node:11.9-alpine as publishbuilder
+# COPY ./client/package*.json ./client/
+# RUN cd ./client && npm install --silent
+# COPY ./client/ ./client/
+# RUN cd ./client && npm run build
 
-RUN npm config set unsafe-perm true
+# RUN npm config set unsafe-perm true
 
-RUN cd ./client && npm install -g serve
-CMD ["serve", "-s", "./client/build"]
-EXPOSE 8081
+# RUN cd ./client && npm install -g serve
+# CMD ["serve", "-s", "./client/build"]
+# EXPOSE 8081
 
 # FROM nginx
 # COPY --from=publishbuilder ./client/build /usr/share/nginx/
