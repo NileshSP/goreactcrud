@@ -46,11 +46,16 @@ COPY ./client/package*.json ./client/
 RUN cd ./client && npm install --silent
 COPY ./client/ ./client/
 RUN cd ./client && npm run build
-CMD ["cd","./client","&&","npm", "run", "start"]
+# CMD ["cd","./client","&&","npm", "run", "start"]
+# EXPOSE 8081
+
+# Install and configure `serve`.
+RUN npm install -g serve
+CMD serve -s ./client/build
 EXPOSE 8081
 
 # FROM nginx
 # COPY --from=publishbuilder ./client/build /usr/share/nginx/
 # COPY ./client/nginx.conf /etc/nginx/nginx.conf
-#EXPOSE $PORT
+# EXPOSE 8081
 #ENTRYPOINT ["nginx","-g","daemon off;"]
