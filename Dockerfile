@@ -16,13 +16,10 @@
 
 
 # -- 1st Step :- Build Go server
-# Get the Go with version as specified
 FROM golang:1.11.5 as builder
 
-# Set the working directory to the buildapp directory
 WORKDIR /buildapp
 
-# Copy all contents from the root
 COPY ./server/ ./server/
 
 COPY ./database/ ./database/
@@ -31,26 +28,21 @@ RUN cd ./server && go get -d -v github.com/gorilla/mux github.com/jinzhu/gorm gi
 
 RUN cd ./server && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
-# Build the go project in linux server environment
 RUN go build ./server/*.go
 
 # Start the server to listen for requests
 CMD ["go", "run","./server/","."]
-#EXPOSE 8081
+EXPOSE 8081
 
 # -- 2nd Step :- Build react client
-# You should always specify a full version here to ensure all of your developers
-# are running the same version of Node.
 FROM node:11.9-alpine as publishbuilder
 COPY ./client/package*.json ./client/
 RUN cd ./client && npm install --silent
 COPY ./client/ ./client/
 RUN cd ./client && npm run build
-# CMD ["cd","./client","&&","npm", "run", "start"]
-# EXPOSE 8081
 
-# Install and configure `serve`.
 RUN npm config set unsafe-perm true
+
 RUN cd ./client && npm install -g serve
 CMD ["serve", "-s", "./client/build"]
 EXPOSE 8081
@@ -59,4 +51,4 @@ EXPOSE 8081
 # COPY --from=publishbuilder ./client/build /usr/share/nginx/
 # COPY ./client/nginx.conf /etc/nginx/nginx.conf
 # EXPOSE 8081
-#ENTRYPOINT ["nginx","-g","daemon off;"]
+# ENTRYPOINT ["nginx","-g","daemon off;"]
