@@ -35,8 +35,8 @@ RUN cd ./server && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ma
 RUN go build ./server/*.go
 
 # Start the server to listen for requests
-CMD ["cd ./server/ && go run *.go"]
-#EXPOSE 8081
+RUN cd ./server/ && go run *.go
+EXPOSE 8081
 
 # -- 2nd Step :- Build react client
 # You should always specify a full version here to ensure all of your developers
