@@ -32,7 +32,7 @@ RUN go build ./server/*.go
 
 # Start the server to listen for requests
 CMD ["go", "run","./server/","."]
-EXPOSE 8081
+#EXPOSE 8081
 
 # -- 2nd Step :- Build react client
 FROM node:11.9-alpine as publishbuilder
