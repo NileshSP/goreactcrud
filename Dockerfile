@@ -45,8 +45,8 @@ FROM node:11.9-alpine as publishbuilder
 COPY ./client/package*.json ./client/
 RUN cd ./client && npm install --silent
 COPY ./client/ ./client/
-RUN cd ./client && npm run build
-CMD ["cd","./client","&&","npm", "start"]
+#RUN cd ./client && npm run build
+CMD ["cd","./client","&&","npm", "run", "start"]
 #EXPOSE 8081
 
 # FROM nginx
