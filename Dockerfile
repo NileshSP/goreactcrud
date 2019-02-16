@@ -50,7 +50,7 @@ RUN cd ./client && npm run build
 # EXPOSE 8081
 
 # Install and configure `serve`.
-RUN npm install -g serve
+RUN cd ./client && npm install -g serve
 CMD ["serve", "-s", "./client/build"]
 EXPOSE 8081
 
