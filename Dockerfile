@@ -50,6 +50,7 @@ RUN cd ./client && npm run build
 # EXPOSE 8081
 
 # Install and configure `serve`.
+RUN npm config set unsafe-perm true
 RUN cd ./client && npm install -g serve
 CMD ["serve", "-s", "./client/build"]
 EXPOSE 8081
