@@ -36,7 +36,7 @@ RUN go build ./server/*.go
 
 # Start the server to listen for requests
 CMD ["go", "run","./server/","."]
-EXPOSE 8081
+#EXPOSE 8081
 
 # -- 2nd Step :- Build react client
 # You should always specify a full version here to ensure all of your developers
@@ -46,7 +46,8 @@ COPY ./client/package*.json ./client/
 RUN cd ./client && npm install --silent
 COPY ./client/ ./client/
 RUN cd ./client && npm run build
-CMD ["npm", "start"]
+CMD ["cd","./client","&&","npm", "start"]
+EXPOSE 8081
 
 # FROM nginx
 # COPY --from=publishbuilder ./client/build /usr/share/nginx/
