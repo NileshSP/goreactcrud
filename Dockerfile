@@ -46,9 +46,10 @@ COPY ./client/package*.json ./client/
 RUN cd ./client && npm install --silent
 COPY ./client/ ./client/
 RUN cd ./client && npm run build
+CMD ["npm", "start"]
 
-FROM nginx
-COPY --from=publishbuilder ./client/build /usr/share/nginx/
-COPY ./client/nginx.conf /etc/nginx/nginx.conf
+# FROM nginx
+# COPY --from=publishbuilder ./client/build /usr/share/nginx/
+# COPY ./client/nginx.conf /etc/nginx/nginx.conf
 #EXPOSE $PORT
 #ENTRYPOINT ["nginx","-g","daemon off;"]
