@@ -17,35 +17,26 @@
 
 # -- 1st Step :- Build Go server
 FROM golang:1.11.5 as builder
-
 WORKDIR /buildapp
-
 COPY ./server/ ./server/
-
 COPY ./database/ ./database/
-
 RUN cd ./server && go get -d -v github.com/gorilla/mux github.com/jinzhu/gorm github.com/jinzhu/gorm/dialects/sqlite github.com/gorilla/handlers
-
 RUN cd ./server && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
-
 RUN go build ./server/*.go
-
-# Start the server to listen for requests
-#CMD ["go", "run","./server/","."]
+CMD ["go", "run","./server/","."]
 #EXPOSE 8081
 
 # -- 2nd Step :- Build react client
-FROM node:11.9-alpine as publishbuilder
-COPY ./client/package*.json ./client/
-RUN cd ./client && npm install --silent
-COPY ./client/ ./client/
-RUN cd ./client && npm run build
+# FROM node:11.9-alpine as publishbuilder
+# COPY ./client/package*.json ./client/
+# RUN cd ./client && npm install --silent
+# COPY ./client/ ./client/
+# RUN cd ./client && npm run build
 
-RUN npm config set unsafe-perm true
+# RUN npm config set unsafe-perm true
 
-RUN cd ./client && npm install -g serve
+# RUN cd ./client && npm install -g serve
 # CMD ["serve", "-s", "./client/build"]
-CMD ["go", "run", "./server/", ".", "&&", "serve", "-s", "./client/build"]
 # EXPOSE 8081
 
 # FROM nginx
