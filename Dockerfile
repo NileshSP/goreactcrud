@@ -43,9 +43,9 @@ RUN go build ./server/*.go
 RUN curl -sL https://deb.nodesource.com/setup_10.x |  bash -
 RUN apt-get install -y nodejs
 COPY ./client/package*.json ./client/
-RUN cd ./client && npm install --silent
+RUN npm install --silent --prefix ./client
 COPY ./client/ ./client/
-RUN cd ./client && npm run build
+RUN npm run build --prefix ./client
 
 # start the go server which would serve react's static files alongwith API endpoints
 CMD ["go", "run","./server/","*.go"]
