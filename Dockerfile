@@ -15,14 +15,14 @@
 #git subtree push --prefix goreactcrud heroku master  OR  git push heroku master  OR  git push -f heroku master
 
 # -- 2nd Step :- Build react client
-FROM node:11.9-alpine as publishbuilder
-COPY ./client/package*.json ./client/
-RUN cd ./client && npm install --silent
-COPY ./client/ ./client/
-RUN cd ./client && npm run build
-RUN npm config set unsafe-perm true
-RUN cd ./client && npm install -g serve
-CMD ["serve", "-s", "./client/build"]
+# FROM node:11.9-alpine as publishbuilder
+# COPY ./client/package*.json ./client/
+# RUN cd ./client && npm install --silent
+# COPY ./client/ ./client/
+# RUN cd ./client && npm run build
+# RUN npm config set unsafe-perm true
+# RUN cd ./client && npm install -g serve
+# CMD ["serve", "-s", "./client/build"]
 # EXPOSE 8081
 
 # -- 1st Step :- Build Go server
@@ -33,8 +33,19 @@ COPY ./database/ ./database/
 RUN cd ./server && go get -d -v github.com/gorilla/mux github.com/jinzhu/gorm github.com/jinzhu/gorm/dialects/sqlite github.com/gorilla/handlers
 RUN cd ./server && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 RUN go build ./server/*.go
-CMD ["go", "run","./server/","*.go"]
-EXPOSE 8081
+#CMD ["go", "run","./server/","*.go"]
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x |  bash -
+RUN apt-get install -y nodejs
+COPY ./client/package*.json ./client/
+RUN cd ./client && npm install --silent
+COPY ./client/ ./client/
+RUN cd ./client && npm run build
+RUN npm config set unsafe-perm true
+RUN cd ./client && npm install -g serve
+
+CMD ["go", "run","./server/","*.go", "&&", "serve", "-s", "./client/build"]
+#EXPOSE 8081
 
 
 # FROM nginx
