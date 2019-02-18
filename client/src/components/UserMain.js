@@ -9,7 +9,7 @@ class UserMain extends Component {
     let port = !inDev ? (process.env.PORT !== undefined ? process.env.PORT : 8081) : 8081;
     this.state = {
         users : new Set(),
-        apiUrlBase : "http://localhost:"+ port,
+        apiUrlBase : "http://localhost:"+ port + "/api",
         getUrl : (endpointKey) => this.state.apiUrlBase + "/" + endpointKey
     }
     console.log('React got port as', this.state.apiUrlBase)
