@@ -34,7 +34,7 @@ RUN cd ./server && go get -d -v github.com/gorilla/mux github.com/jinzhu/gorm gi
 RUN cd ./server && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 RUN go build ./server/*.go
 CMD ["go", "run","./server/","*.go"]
-#EXPOSE 8081
+EXPOSE 8081
 
 
 # FROM nginx
