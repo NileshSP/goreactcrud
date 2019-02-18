@@ -5,11 +5,11 @@ import ListUsers from './ListUsers';
 class UserMain extends Component {
   constructor(props) {
     super(props)
-    let inDev = process.env.NODE_ENV !== 'production';
-    let port = !inDev ? (process.env.PORT !== undefined ? process.env.PORT : 8081) : 8081;
+    const isDev = process.env.NODE_ENV !== 'production';
+    const port = !isDev ? (process.env.PORT !== undefined ? process.env.PORT : 8081) : 8081;
     this.state = {
         users : new Set(),
-        apiUrlBase : "http://localhost:"+ port + "/api",
+        apiUrlBase : (isDev ? "http://localhost:"+ port : "") + "/api",
         getUrl : (endpointKey) => this.state.apiUrlBase + "/" + endpointKey
     }
     console.log('React got port as', this.state.apiUrlBase)
