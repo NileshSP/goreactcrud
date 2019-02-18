@@ -18,11 +18,24 @@ class UserMain extends Component {
   }
 
   componentDidMount() {
+    this.apiCheck();
     this.getUsers();
   }
 
   async setAppState(options) {
     await this.setState({...this.state, ...options})
+  }
+
+  async apiCheck() {
+    fetch(this.state.getUrl("healthcheck"), { 
+      method: "GET"
+    , headers: {
+        Accept: "application/json",
+      }
+    })
+    .then(response => { return response.json() }) 
+    .then(check => console.log("API health check:", check))
+    .catch(error => console.log("Error occured during api health check: ", error))
   }
 
   async getUsers() {
