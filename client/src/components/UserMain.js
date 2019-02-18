@@ -36,6 +36,7 @@ class UserMain extends Component {
     .then(response => { return response.json() }) 
     .then(check => console.log("API health check:", check))
     .catch(error => console.log("Error occured during api health check: ", error))
+    document.title = "Go using React UI"
   }
 
   async getUsers() {
