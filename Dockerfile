@@ -23,7 +23,6 @@
 # RUN npm config set unsafe-perm true
 # RUN cd ./client && npm install -g serve
 # CMD ["serve", "-s", "./client/build"]
-# EXPOSE 8081
 
 # -- 1st Step :- Build Go server
 FROM golang:1.11.5 as builder
@@ -41,16 +40,9 @@ COPY ./client/package*.json ./client/
 RUN cd ./client && npm install --silent
 COPY ./client/ ./client/
 RUN cd ./client && npm run build
-RUN npm config set unsafe-perm true
-RUN cd ./client && npm install -g serve
+#RUN npm config set unsafe-perm true
+#RUN cd ./client && npm install -g serve
 #CMD ["sh","-c","go run ./server/*.go && serve -s ./client/build"]
+#CMD go run ./server/*.go ; serve -s ./client/build
 CMD go run ./server/*.go 
-#; serve -s ./client/build
 #EXPOSE 8081
-
-
-# FROM nginx
-# COPY --from=publishbuilder ./client/build /usr/share/nginx/
-# COPY ./client/nginx.conf /etc/nginx/nginx.conf
-# EXPOSE 8081
-# ENTRYPOINT ["nginx","-g","daemon off;"]
