@@ -43,9 +43,7 @@ COPY ./client/ ./client/
 RUN cd ./client && npm run build
 RUN npm config set unsafe-perm true
 RUN cd ./client && npm install -g serve
-RUN go run ./server/ *.go
-RUN serve -s ./client/build
-#CMD ["sh","-c","go run ./server/ *.go && serve -s ./client/build"]
+CMD ["sh","-c","go run ./server/*.go && serve -s ./client/build"]
 #EXPOSE 8081
 
 
