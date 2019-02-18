@@ -40,14 +40,31 @@ func healthCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleRequests() {
+
+	// server data endpoints with json response using '/api' prefix
 	myrouter := mux.NewRouter().StrictSlash(true)
-	// server data endpoints with json response using '/api' prefix 
 	myrouter.HandleFunc("/api/", healthCheck).Methods("GET")
 	myrouter.HandleFunc("/api/healthcheck", healthCheck).Methods("GET")
-	myrouter.HandleFunc("/api/users", AllUsers).Methods("GET")
-	myrouter.HandleFunc("/api/adduser/{name}/{email}", NewUser).Methods("POST")
-	myrouter.HandleFunc("/api/deleteuser/{name}/{email}", DeleteUser).Methods("DELETE")
-	myrouter.HandleFunc("/api/updateuser/{name}/{email}", UpdateUser).Methods("PUT")
+
+	// For go-memdb
+	InitializeInMemoryDB()
+
+	//Add sample user
+	var person = &Person{"emailnileshp@gmail.com", "Nilesh"}
+	AddPersontoDb(person)
+
+	myrouter.HandleFunc("/api/users", GetPersons).Methods("GET")
+	myrouter.HandleFunc("/api/adduser/{name}/{email}", AddPerson).Methods("POST")
+	myrouter.HandleFunc("/api/deleteuser/{name}/{email}", DeletePerson).Methods("DELETE")
+	myrouter.HandleFunc("/api/updateuser/{name}/{email}", UpdatePerson).Methods("PUT")
+
+	// For in sqlite
+	// InitializeSqlite();
+	// myrouter.HandleFunc("/api/users", AllUsers).Methods("GET")
+	// myrouter.HandleFunc("/api/adduser/{name}/{email}", NewUser).Methods("POST")
+	// myrouter.HandleFunc("/api/deleteuser/{name}/{email}", DeleteUser).Methods("DELETE")
+	// myrouter.HandleFunc("/api/updateuser/{name}/{email}", UpdateUser).Methods("PUT")
+
 	// serve static files(from react) for '/' prefix
 	myrouter.PathPrefix("/").Handler(http.FileServer(http.Dir("./client/build")))
 	log.Fatal(http.ListenAndServe(*listen, handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(myrouter)))
@@ -55,6 +72,5 @@ func handleRequests() {
 
 func main() {
 	fmt.Println("Go ORM server initialized")
-	//InitialMigrations()
 	handleRequests()
 }
