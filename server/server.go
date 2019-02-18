@@ -47,6 +47,7 @@ func handleRequests() {
 	myrouter.HandleFunc("/api/adduser/{name}/{email}", NewUser).Methods("POST")
 	myrouter.HandleFunc("/api/deleteuser/{name}/{email}", DeleteUser).Methods("DELETE")
 	myrouter.HandleFunc("/api/updateuser/{name}/{email}", UpdateUser).Methods("PUT")
+	myrouter.PathPrefix("/").Handler(http.FileServer(http.Dir("./client/build")))
 	log.Fatal(http.ListenAndServe(*listen, handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(myrouter)))
 }
 

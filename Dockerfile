@@ -44,7 +44,8 @@ RUN cd ./client && npm run build
 RUN npm config set unsafe-perm true
 RUN cd ./client && npm install -g serve
 #CMD ["sh","-c","go run ./server/*.go && serve -s ./client/build"]
-CMD go run ./server/*.go ; serve -s ./client/build
+CMD go run ./server/*.go 
+#; serve -s ./client/build
 #EXPOSE 8081
 
 
