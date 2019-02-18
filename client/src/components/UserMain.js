@@ -47,7 +47,7 @@ class UserMain extends Component {
       }
     })
     .then(res => { return res.json() }) 
-    .then(users => { this.setAppState({users: new Set([...users])}) })
+    .then(users => { this.setAppState({users: new Set((users !== null ? [...users] : []))}) })
     .catch(error => console.log("Error occured while getting user list: ", error))
   }
 
