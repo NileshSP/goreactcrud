@@ -1,7 +1,9 @@
 # goreactcrud
 Sample web app built using react, go & (hashicorp's)in-memory/sqlite db
 
-Try the demo link [https://goreactcrud.herokuapp.com](https://goreactcrud.herokuapp.com)
+Checkout the live [demo](https://goreactcrud.herokuapp.com)
+
+Project is published to heroku using [Dockerfile](https://github.com/NileshSP/goreactcrud/blob/master/Dockerfile)
 
 Clone the repository `https://github.com/NileshSP/goreactcrud.git`
 

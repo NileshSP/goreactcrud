@@ -38,7 +38,7 @@ RUN cd ./server && go get -d -v github.com/gorilla/mux github.com/jinzhu/gorm \
 
 RUN cd ./server && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 RUN go build ./server/*.go
-#CMD ["go", "run","./server/","*.go"]
+
 # -- Build react client
 RUN curl -sL https://deb.nodesource.com/setup_10.x |  bash -
 RUN apt-get install -y nodejs
@@ -46,7 +46,9 @@ COPY ./client/package*.json ./client/
 RUN cd ./client && npm install --silent
 COPY ./client/ ./client/
 RUN cd ./client && npm run build
-#CMD ["sh","-c","go run ./server/*.go && serve -s ./client/build"]
-#CMD go run ./server/*.go ; serve -s ./client/build
+
+# start the go server which would serve react's static files alongwith API endpoints
 CMD ["go", "run","./server/","*.go"]
-#EXPOSE 8081
+# CMD ["sh","-c","go run ./server/*.go && serve -s ./client/build"]
+# CMD go run ./server/*.go ; serve -s ./client/build
+# EXPOSE 8081
