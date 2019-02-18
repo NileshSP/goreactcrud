@@ -29,7 +29,11 @@ FROM golang:1.11.5 as builder
 WORKDIR /buildapp
 COPY ./server/ ./server/
 COPY ./database/ ./database/
-RUN cd ./server && go get -d -v github.com/gorilla/mux github.com/jinzhu/gorm github.com/jinzhu/gorm/dialects/sqlite github.com/gorilla/handlers
+RUN cd ./server && go get -d -v github.com/gorilla/mux github.com/jinzhu/gorm \ 
+  github.com/jinzhu/gorm/dialects/sqlite \
+  github.com/gorilla/handlers \
+  github.com/hashicorp/go-memdb
+  
 RUN cd ./server && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 RUN go build ./server/*.go
 #CMD ["go", "run","./server/","*.go"]
