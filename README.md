@@ -13,5 +13,3 @@ In terminal one, start go server as:
 
 Open terminal two, start react client app as:
  `cd ./client && npm start`
-
- Open link [http://localhost:8081/](http://localhost:8081/) in the browser
