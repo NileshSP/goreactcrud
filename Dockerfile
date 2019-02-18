@@ -14,7 +14,7 @@
 #heroku stack:set container
 #git subtree push --prefix goreactcrud heroku master  OR  git push heroku master  OR  git push -f heroku master
 
-# -- 2nd Step :- Build react client
+# -- Build react client & server static files using npm's serve package 
 # FROM node:11.9-alpine as publishbuilder
 # COPY ./client/package*.json ./client/
 # RUN cd ./client && npm install --silent
@@ -24,7 +24,7 @@
 # RUN cd ./client && npm install -g serve
 # CMD ["serve", "-s", "./client/build"]
 
-# -- 1st Step :- Build Go server
+# -- Build Go server
 FROM golang:1.11.5 as builder
 WORKDIR /buildapp
 COPY ./server/ ./server/
@@ -33,16 +33,14 @@ RUN cd ./server && go get -d -v github.com/gorilla/mux github.com/jinzhu/gorm gi
 RUN cd ./server && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 RUN go build ./server/*.go
 #CMD ["go", "run","./server/","*.go"]
-
+# -- Build react client
 RUN curl -sL https://deb.nodesource.com/setup_10.x |  bash -
 RUN apt-get install -y nodejs
 COPY ./client/package*.json ./client/
 RUN cd ./client && npm install --silent
 COPY ./client/ ./client/
 RUN cd ./client && npm run build
-#RUN npm config set unsafe-perm true
-#RUN cd ./client && npm install -g serve
 #CMD ["sh","-c","go run ./server/*.go && serve -s ./client/build"]
 #CMD go run ./server/*.go ; serve -s ./client/build
-CMD go run ./server/*.go 
+CMD ["go", "run","./server/","*.go"]
 #EXPOSE 8081
