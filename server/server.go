@@ -48,11 +48,6 @@ func handleRequests() {
 
 	// For go-memdb
 	InitializeInMemoryDB()
-
-	//Add sample user
-	var person = &Person{"emailnileshp@gmail.com", "Nilesh"}
-	AddPersontoDb(person)
-
 	myrouter.HandleFunc("/api/users", GetPersons).Methods("GET")
 	myrouter.HandleFunc("/api/adduser/{name}/{email}", AddPerson).Methods("POST")
 	myrouter.HandleFunc("/api/deleteuser/{name}/{email}", DeletePerson).Methods("DELETE")

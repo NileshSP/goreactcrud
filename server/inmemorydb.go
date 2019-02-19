@@ -35,10 +35,24 @@ var schema = &memdb.DBSchema{
 
 // Create a new data base
 func InitializeInMemoryDB() {
+	fmt.Println("In-memory endpoint initialized")
 	gomemdb, err = memdb.NewMemDB(schema)
 	if err != nil {
 		panic(err)
+	} else {
+
+		//Add sample users
+		persons := []Person{
+			Person{"emailnileshp@gmail.com", "Nilesh"},
+			Person{"test@test.com", "Test"},
+		}
+
+		for _, person := range persons {
+			AddPersontoDb(person)
+		}
+		fmt.Println("Initial sample persons added")
 	}
+	fmt.Println("In-memory endpoint completed")
 }
 
 func GetPersons(w http.ResponseWriter, r *http.Request) {
@@ -53,17 +67,15 @@ func GetPersons(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 
-		var persons []Person
+		persons := []Person{}
 		for {
 			obj := result.Next()
 			if obj == nil {
 				break
 			} else {
-				//fmt.Println("GetPersons => person => ", obj)
-				if objPerson, ok := obj.(*Person); ok {
-					person := Person(*objPerson)
+				if objPerson, ok := obj.(Person); ok {
+					person := Person(objPerson)
 					persons = append(persons, person)
-					//fmt.Println("GetPersons => person => after assertion => ", person)
 				} else {
 					fmt.Println("GetPersons => person => type assertion for person failed")
 				}
@@ -88,7 +100,7 @@ func AddPerson(w http.ResponseWriter, r *http.Request) {
 		name := reqVals["name"]
 		email := reqVals["email"]
 
-		var person = &Person{email, name}
+		person := Person{email, name}
 		AddPersontoDb(person)
 
 	} else {
@@ -97,7 +109,7 @@ func AddPerson(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Add Person endpoint completed")
 }
 
-func AddPersontoDb(person *Person) {
+func AddPersontoDb(person Person) {
 	// Create a write transaction
 	txn := gomemdb.Txn(true)
 
