@@ -29,7 +29,7 @@ class ListUsers extends Component {
                 <div className="ListUserHeader" >
                     <div>User</div>
                     <div>Email</div>
-                    <div>&nbsp;</div>
+                    <div>Action(option)</div>
                 </div>
             </li>    
             <li>
@@ -48,7 +48,7 @@ class ListUsers extends Component {
                     <div className="ListUserItems">
                         <div><input type="text" value={user.Name} readOnly /></div>
                         <div><input type="text" value={user.Email} readOnly /></div>
-                        <div><input key={user.ID} type="button" value="Delete" className="btn btn-outline-secondary btn-sm"
+                        <div><input key={user.ID} type="button" value="Delete" className="btn btn-outline-danger btn-sm"
                                 onClick={(e) => this.props.deleteUser(user)} /></div>
                     </div>
                 </li>
