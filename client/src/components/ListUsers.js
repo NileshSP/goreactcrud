@@ -23,20 +23,20 @@ class ListUsers extends Component {
   render() {
     const users = [...this.props.users];  
     return (
-      <div className="ListUsersMain">
+      <div className={["ListUsersMain", "rounded"].join(' ')} >
         <ul>
             <li>
-                <div className="ListUserHeader">
+                <div className="ListUserHeader" >
                     <div>User</div>
                     <div>Email</div>
                     <div>&nbsp;</div>
                 </div>
             </li>    
             <li>
-                <div className="ListUserAdd">
+                <div className="ListUserAdd" >
                     <div><input id="userName" ref={this.userName} type="text" placeholder="Name..." /></div>
                     <div><input id="userEmail" ref={this.userEmail} type="text" placeholder="Email..." /></div>
-                    <div><input id="btnAdd" type="button" value="Add" 
+                    <div><input id="btnAdd" type="button" value="Add" className="btn btn-outline-primary btn-sm"
                             onClick={(e) => this.addUserItem() } 
                             />
                     </div>
@@ -46,9 +46,10 @@ class ListUsers extends Component {
             users.map(user => 
                 <li key={user.Name+user.Email}>
                     <div className="ListUserItems">
-                        <div>{user.Name}</div>
-                        <div>{user.Email}</div>
-                        <div><input key={user.ID} type="button" value="Delete" onClick={(e) => this.props.deleteUser(user)} /></div>
+                        <div><input type="text" value={user.Name} readOnly /></div>
+                        <div><input type="text" value={user.Email} readOnly /></div>
+                        <div><input key={user.ID} type="button" value="Delete" className="btn btn-outline-secondary btn-sm"
+                                onClick={(e) => this.props.deleteUser(user)} /></div>
                     </div>
                 </li>
             )
