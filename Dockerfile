@@ -30,7 +30,7 @@ WORKDIR /buildapp
 COPY ./server/ ./server/
 COPY ./database/ ./database/
 
-# copy React's static files from previous build i.e. clientbuilder
+# copy react's static files from previous build i.e. clientbuilder
 COPY --from=clientbuilder ./client/build ./client/build
 
 # Required dependencies for go server project
