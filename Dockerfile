@@ -14,7 +14,7 @@
 #heroku stack:set container
 #git subtree push --prefix goreactcrud heroku master  OR  git push heroku master  OR  git push -f heroku master
 
-# -- Build react client & server static files using npm's serve package 
+# -- Build react client & serve static files using npm's serve package 
 FROM node:11.9-alpine as clientbuilder
 COPY ./client/package*.json ./client/
 RUN cd ./client && npm install --silent
