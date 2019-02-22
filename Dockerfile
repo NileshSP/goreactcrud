@@ -34,12 +34,14 @@ COPY ./database/ ./database/
 COPY --from=clientbuilder ./client/build ./client/build
 
 # Required dependencies for go server project
-RUN cd ./server && go get -d -v github.com/gorilla/mux github.com/jinzhu/gorm \ 
+RUN cd ./server \
+  && go get -d -v github.com/gorilla/mux github.com/jinzhu/gorm \ 
   github.com/jinzhu/gorm/dialects/sqlite \
   github.com/gorilla/handlers \
   github.com/hashicorp/go-memdb
 
-RUN cd ./server && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main . \
+RUN cd ./server \
+  && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main . \
   && go build *.go
 
 # -- Build react client
