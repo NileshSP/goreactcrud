@@ -40,7 +40,7 @@ RUN cd ./server && go get -d -v github.com/gorilla/mux github.com/jinzhu/gorm \
   github.com/hashicorp/go-memdb
 
 RUN cd ./server && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main . \
-  && go build ./server/*.go
+  && go build *.go
 
 # -- Build react client
 # RUN curl -sL https://deb.nodesource.com/setup_10.x |  bash -
