@@ -44,7 +44,7 @@ h1 {
 
 .ListUsersMain > ul > li > div {
   display: grid;
-  grid-auto-columns: 2fr 2fr 1fr;
+  grid-auto-columns: 3fr 3fr 0.7fr;
   grid-auto-flow: column;
   padding:2px;
   margin:2px;
@@ -52,7 +52,7 @@ h1 {
 }
 
 .ListUsersMain > ul > li > div > div:nth-child(3) {
-  text-align: right;
+  text-align: center;
 }
 
 .ListUsersMain > ul > li > div > div > input[type="button"] {
@@ -95,5 +95,9 @@ h1 {
   }  
   .ListUsersMain > ul > li > div > div > input[type="button"] {
     text-align: center;
+    width:20vw;
+  }  
+  .ListUsersMain > ul > li > div > div:nth-child(3) {
+    text-align: end;
   }  
 }
