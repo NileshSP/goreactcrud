@@ -9,6 +9,7 @@ class UserMain extends Component {
     const port = !isDev ? (process.env.PORT !== undefined ? process.env.PORT : 8081) : 8081;
     this.state = {
         users : new Set(),
+        isLoading: true,
         apiUrlBase : (isDev ? "http://localhost:"+ port : "https://goreactcrud.herokuapp.com") + "/api",
         getUrl : (endpointKey) => this.state.apiUrlBase + "/" + endpointKey
     }
@@ -40,6 +41,7 @@ class UserMain extends Component {
   }
 
   async getUsers() {
+    await this.setAppState({isLoading:true})
     fetch(this.state.getUrl("users"), { 
       method: "GET"
     , headers: {
@@ -47,7 +49,7 @@ class UserMain extends Component {
       }
     })
     .then(res => { return res.json() }) 
-    .then(users => { this.setAppState({users: new Set((users !== null ? [...users] : []))}) })
+    .then(users => { this.setAppState({isLoading: false , users: new Set((users !== null ? [...users] : []))}) })
     .catch(error => console.log("Error occured while getting user list: ", error))
   }
 
@@ -84,6 +86,7 @@ class UserMain extends Component {
           </div>
           <div>
             <ListUsers 
+              isLoading={this.state.isLoading}
               users={this.state.users} 
               addUser={(user) => this.addUser(user)} 
               deleteUser={(user) => this.deleteUser(user)}/>

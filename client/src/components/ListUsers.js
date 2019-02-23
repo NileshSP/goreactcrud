@@ -42,7 +42,12 @@ class ListUsers extends Component {
                     </div>
                 </div>
             </li>    
-        {
+        { 
+          (this.props.isLoading) ?
+            <li>
+              <div>loading....</div>
+            </li>
+          :          
             users.map(user => 
                 <li key={user.Name+user.Email}>
                     <div className="ListUserItems">
