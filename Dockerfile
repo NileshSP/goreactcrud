@@ -33,6 +33,7 @@ COPY ./database/ ./database/
 # copy react's static files from previous build i.e. clientbuilder
 COPY --from=clientbuilder ./client/build ./client/build
 COPY index.php .
+COPY composer.json .
 
 # Required dependencies for go server project
 RUN cd ./server \
