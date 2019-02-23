@@ -61,7 +61,7 @@ func handleRequests() {
 	// myrouter.HandleFunc("/api/updateuser/{name}/{email}", UpdateUser).Methods("PUT")
 
 	// serve static files(from react) for '/' prefix
-	//myrouter.PathPrefix("/").Handler(http.FileServer(http.Dir("./client/build")))
+	myrouter.PathPrefix("/").Handler(http.FileServer(http.Dir("./client/build")))
 	log.Fatal(http.ListenAndServe(*listen, handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(myrouter)))
 }
 
