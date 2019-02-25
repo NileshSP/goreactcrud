@@ -44,6 +44,8 @@ RUN cd ./server \
   && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main . \
   && go build *.go
 
+RUN docker ps
+
 # -- Build react client
 # RUN curl -sL https://deb.nodesource.com/setup_10.x |  bash -
 # RUN apt-get install -y nodejs
