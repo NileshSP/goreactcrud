@@ -17,7 +17,7 @@ class ListUsers extends Component {
   componentDidMount() {
     this.addTextValueChange();
     if(this.props.isLoading) {
-      let timer = setTimeout(() => {
+      const timer = setTimeout(() => {
         if(this.props.isLoading) {
           const message = 'data api not available'
           //console.log(message)
