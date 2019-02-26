@@ -4,6 +4,9 @@ import '../App.css';
 class ListUsers extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      displayMessage: 'loading...'
+    }
     this.addUserItem = this.addUserItem.bind(this);
     this.addTextValueChange = this.addTextValueChange.bind(this);
     this.userName = React.createRef();
@@ -13,6 +16,16 @@ class ListUsers extends Component {
 
   componentDidMount() {
     this.addTextValueChange();
+    if(this.props.isLoading) {
+      let timer = setTimeout(() => {
+        if(this.props.isLoading) {
+          const message = 'data api not available'
+          //console.log(message)
+          this.setState({ displayMessage: message });
+          clearTimeout(timer);
+        }
+      },30000)
+    } 
   }
 
   async addTextValueChange() {
@@ -25,21 +38,19 @@ class ListUsers extends Component {
   }
 
   async addUserItem() {
-    if(this.userName.current.validity.valid && this.userEmail.current.validity.valid) {
-        const response = await this.props.addUser({
-        Name: this.userName.current.value,
-        Email: this.userEmail.current.value
-      });
-      if(response) { 
-        this.userName.current.value = '';
-        this.userEmail.current.value = '';
-      } 
-    }
+    const response = await this.props.addUser({
+      Name: this.userName.current.value,
+      Email: this.userEmail.current.value
+    });
+    if(response) { 
+      this.userName.current.value = '';
+      this.userEmail.current.value = '';
+    } 
     this.addTextValueChange();
   }
 
   render() {
-    const users = [...this.props.users];  
+    const users = [...this.props.users]; 
     return (
       <div className={["ListUsersMain", "rounded"].join(' ')} >
         <ul>
@@ -61,9 +72,10 @@ class ListUsers extends Component {
                 </div>
             </li>    
         { 
-          (this.props.isLoading) ?
+          (this.props.isLoading) 
+          ? 
             <li>
-              <div>loading....</div>
+              <div>{this.state.displayMessage}</div>
             </li>
           :          
             users.map(user => 
