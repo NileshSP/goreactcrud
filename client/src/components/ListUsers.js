@@ -5,19 +5,37 @@ class ListUsers extends Component {
   constructor(props) {
     super(props);
     this.addUserItem = this.addUserItem.bind(this);
+    this.addTextValueChange = this.addTextValueChange.bind(this);
     this.userName = React.createRef();
     this.userEmail = React.createRef();
+    this.btnAdd = React.createRef();
+  }
+
+  componentDidMount() {
+    this.addTextValueChange();
+  }
+
+  async addTextValueChange() {
+    if(this.userName.current.validity.valid && this.userEmail.current.validity.valid) {
+      this.btnAdd.current.disabled = false;
+    }
+    else {
+      this.btnAdd.current.disabled = true;
+    }
   }
 
   async addUserItem() {
-    const response = await this.props.addUser({
-      Name: this.userName.current.value,
-      Email: this.userEmail.current.value
-    });
-    if(response) { 
-      this.userName.current.value = '';
-      this.userEmail.current.value = '';
-    } 
+    if(this.userName.current.validity.valid && this.userEmail.current.validity.valid) {
+        const response = await this.props.addUser({
+        Name: this.userName.current.value,
+        Email: this.userEmail.current.value
+      });
+      if(response) { 
+        this.userName.current.value = '';
+        this.userEmail.current.value = '';
+      } 
+    }
+    this.addTextValueChange();
   }
 
   render() {
@@ -34,9 +52,9 @@ class ListUsers extends Component {
             </li>    
             <li>
                 <div className="ListUserAdd" >
-                    <div><input id="userName" ref={this.userName} type="text" placeholder="Name..." /></div>
-                    <div><input id="userEmail" ref={this.userEmail} type="text" placeholder="Email..." /></div>
-                    <div><input id="btnAdd" type="button" value="Add" className="btn btn-outline-primary btn-sm"
+                    <div><input id="userName" ref={this.userName} type="text" placeholder="Name..." onChange={e => this.addTextValueChange()} pattern=".*\S+.*" required/></div>
+                    <div><input id="userEmail" ref={this.userEmail} type="email" placeholder="Email..." onChange={e => this.addTextValueChange()} required/></div>
+                    <div><input id="btnAdd" ref={this.btnAdd} type="button" value="Add" className="btn btn-outline-primary btn-sm"
                             onClick={(e) => this.addUserItem() } 
                             />
                     </div>
