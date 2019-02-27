@@ -18,7 +18,7 @@ class ListUsers extends Component {
     this.addTextValueChange();
     if(this.props.isLoading) {
       const timer = setTimeout(() => {
-          const message = 'data api currently available'
+          const message = 'data api currently unavailable'
           this.setState({ displayMessage: message });
           clearTimeout(timer);
       },30000)
