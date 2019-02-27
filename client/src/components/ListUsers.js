@@ -5,7 +5,7 @@ class ListUsers extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayMessage: 'loading...'
+      displayMessage: 'loading data . . .'
     }
     this.addUserItem = this.addUserItem.bind(this);
     this.addTextValueChange = this.addTextValueChange.bind(this);
@@ -18,12 +18,9 @@ class ListUsers extends Component {
     this.addTextValueChange();
     if(this.props.isLoading) {
       const timer = setTimeout(() => {
-        if(this.props.isLoading) {
-          const message = 'data api not available'
-          //console.log(message)
+          const message = 'data api currently available'
           this.setState({ displayMessage: message });
           clearTimeout(timer);
-        }
       },30000)
     } 
   }
@@ -75,11 +72,11 @@ class ListUsers extends Component {
           (this.props.isLoading) 
           ? 
             <li>
-              <div>{this.state.displayMessage}</div>
+              <div className={(this.state.displayMessage.indexOf('loading') > -1 ? "loading" : "ListUserItems")} >{this.state.displayMessage}</div>
             </li>
           :          
-            users.map(user => 
-                <li key={user.Name+user.Email}>
+            users.map(user => {
+              return  <li key={user.Name+user.Email}>
                     <div className="ListUserItems">
                         <div><input type="text" value={user.Name} readOnly /></div>
                         <div><input type="text" value={user.Email} readOnly /></div>
@@ -87,7 +84,7 @@ class ListUsers extends Component {
                                 onClick={(e) => this.props.deleteUser(user)} /></div>
                     </div>
                 </li>
-            )
+            })
         }
         </ul>
       </div>

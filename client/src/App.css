@@ -48,7 +48,6 @@ h1 {
   grid-auto-flow: column;
   padding:2px;
   margin:2px;
-  border:solid 0.5px lightgreen;
 }
 
 .ListUsersMain > ul > li > div > div:nth-child(3) {
@@ -96,10 +95,29 @@ h1 {
   width:100%;
 }
 
+.ListUserItems {
+  border:solid 0.5px lightgreen;
+}
+
 .ListUserItems > div {
   margin:2px;
   padding:2px;
   width:100%;
+}
+
+@keyframes loadingText {
+  from {
+    opacity:0;
+  }
+}
+
+.loading {
+  position: fixed;
+  top:5px;
+  z-index: 1;
+  color:red;
+  border:0px;
+  animation: loadingText 0.7s infinite alternate;
 }
 
 @media screen and (max-width: 600px) {
