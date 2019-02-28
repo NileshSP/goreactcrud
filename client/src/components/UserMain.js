@@ -21,7 +21,12 @@ class UserMain extends Component {
 
   componentDidMount() {
     document.title = "Go using React UI";
-    this.apiCheck().then(() => this.getUsers());
+    this.apiCheck().then(() => {
+      const timer = setTimeout(() => {
+        this.getUsers()
+        clearTimeout(timer);
+    },2000)
+    });
   }
 
   setAppState = async options => await this.setState({...this.state, ...options});
@@ -57,8 +62,8 @@ class UserMain extends Component {
     return fetch(this.state.getUrl("adduser" + appendUrl), { 
       method: "POST"
     })
-    .then(response => { console.log('add user response:', response); this.getUsers(); return response; }) 
-    .catch(error => console.log('Error occured while adding user: ', user, error));
+    .then(response => { console.log('add user response:', response); this.getUsers(); return true; }) 
+    .catch(error => { console.log('Error occured while adding user: ', user, error); return false; });
   }
 
   async deleteUser(user) {

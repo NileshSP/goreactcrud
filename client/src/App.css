@@ -23,6 +23,7 @@ h1 {
 .ListUsersMain {
   width:90vw;
   border: solid 1px lightgreen;
+  border-radius: 5px;
 }
 
 .UserMain > div {
@@ -40,6 +41,7 @@ h1 {
   padding:0px;
   width:100%;
   list-style-type: none;
+  border-radius: 5px;
 }
 
 .ListUsersMain > ul > li > div {
@@ -48,6 +50,7 @@ h1 {
   grid-auto-flow: column;
   padding:2px;
   margin:2px;
+  border-radius: 5px;
 }
 
 .ListUsersMain > ul > li > div > div:nth-child(3) {
@@ -57,16 +60,19 @@ h1 {
 .ListUsersMain > ul > li > div > div > input[type="button"] {
   width:50%;
   text-align: center;
+  border-radius: 50px;
 }
 
 .ListUsersMain > ul > li > div > div > input[type="text"], input[type="email"] { 
   padding: 0px;
   border: 0px;
   width:99%;
+  border-radius: 5px;
 }
 
 .ListUsersMain > ul > li > div > div > input[type="text"]:read-only {
   border: 0px;
+  border-radius: 5px;
 }
 
 .ListUsersMain > ul > li > div > div > input:not([read-only="true"]):invalid {
@@ -75,6 +81,7 @@ h1 {
   border-top: 0px;
   border-right: 0px;
   border-bottom: 0px;
+  border-radius: 2px;
 }
 
 .ListUserHeader {
@@ -87,6 +94,11 @@ h1 {
   margin:3px;
   padding:5px;
   padding-left: 4px;
+}
+
+.ListUserAdd {
+  border:solid 0.5px lightgreen;
+  border-radius: 5px;
 }
 
 .ListUserAdd > div {

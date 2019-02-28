@@ -25,31 +25,24 @@ class ListUsers extends Component {
     } 
   }
 
-  async addTextValueChange() {
-    if(this.userName.current.validity.valid && this.userEmail.current.validity.valid) {
-      this.btnAdd.current.disabled = false;
-    }
-    else {
-      this.btnAdd.current.disabled = true;
-    }
-  }
+  addTextValueChange = async () => this.btnAdd.current.disabled = !(this.userName.current.validity.valid && this.userEmail.current.validity.valid);
 
   async addUserItem() {
-    const response = await this.props.addUser({
+    const newUser = {
       Name: this.userName.current.value,
       Email: this.userEmail.current.value
-    });
-    if(response) { 
+    };
+    if (await this.props.addUser(newUser)) { 
       this.userName.current.value = '';
       this.userEmail.current.value = '';
-    } 
+    }
     this.addTextValueChange();
   }
 
   render() {
     const users = [...this.props.users]; 
     return (
-      <div className={["ListUsersMain", "rounded"].join(' ')} >
+      <div className="ListUsersMain" >
         <ul>
             <li>
                 <div className="ListUserHeader" >
