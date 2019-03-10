@@ -47,14 +47,14 @@ func handleRequests() {
 	myrouter.HandleFunc("/api/healthcheck", healthCheck).Methods("GET")
 
 	// For go-memdb
-	InitializeInMemoryDB()
+	go InitializeInMemoryDB()
 	myrouter.HandleFunc("/api/users", GetPersons).Methods("GET")
 	myrouter.HandleFunc("/api/adduser/{name}/{email}", AddPerson).Methods("POST")
 	myrouter.HandleFunc("/api/deleteuser/{name}/{email}", DeletePerson).Methods("DELETE")
 	myrouter.HandleFunc("/api/updateuser/{name}/{email}", UpdatePerson).Methods("PUT")
 
 	// For in sqlite
-	// InitializeSqlite();
+	// go InitializeSqlite();
 	// myrouter.HandleFunc("/api/users", AllUsers).Methods("GET")
 	// myrouter.HandleFunc("/api/adduser/{name}/{email}", NewUser).Methods("POST")
 	// myrouter.HandleFunc("/api/deleteuser/{name}/{email}", DeleteUser).Methods("DELETE")
